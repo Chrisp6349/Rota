@@ -1,8 +1,9 @@
 /**
  * config.js
  * ---------
- * All static data for the rota: the list of staff, dropdown options, and
- * the Google Apps Script endpoint the app reads/writes to.
+ * All static data for the rota: the list of staff, dropdown options, the
+ * Google Apps Script endpoint the app reads/writes to, and where the logo
+ * lives.
  *
  * Edit staff names, list options, or bank holiday dates here each year -
  * nothing else in the app needs to change.
@@ -46,6 +47,11 @@ const bankHolidays = {
     "2026-12-25": "BANK HOLIDAY",
     "2026-12-28": "BANK HOLIDAY"
 };
+
+// Where the department logo lives, used in the print preview header.
+// Files currently sit side by side in the repo root. If they are ever
+// moved into folders, change this one line to "assets/logo.jpg".
+const LOGO_PATH = "logo.jpg";
 
 // Google Apps Script Web App endpoint that stores/serves rota data in
 // a Google Sheet. Used for loading, saving, and publishing the viewer.

@@ -1,27 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<title>Cardiothoracic Theatre SODP Allocations</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cardiothoracic Theatre Allocations Manager</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<h1>Cardiothoracic Theatre SODP Allocations</h1>
+<!-- Top banner -->
+<header class="topbar">
+    <div class="topbar-brand">
+        <img class="topbar-logo" src="logo.jpg" alt="">
+        <div>
+            <h1>Cardiothoracic Theatre Allocations Manager</h1>
+            <p class="topbar-sub">Derriford Hospital, Plymouth</p>
+        </div>
+    </div>
+    <!-- Placeholder for the official NHS organisation logo. Swap this block
+         for the approved asset if the Trust signs off on using it here. -->
+    <div class="nhs-badge" aria-hidden="true">
+        <span class="nhs-badge-mark">NHS</span>
+        <span class="nhs-badge-org">Derriford Hospital<br>Plymouth</span>
+    </div>
+</header>
 
-<div class="panel">
-    Week Commencing (Monday):
-    <input type="date" id="weekDate">
-    <button onclick="viewerMode()">👁 Open Viewer</button>
-    <button onclick="publishViewer()">📤 Publish Viewer</button>
-    <button onclick="printFriendlyView()">🖨 Print Preview</button>
-    <button id="loadBtn" onclick="loadWeek()">📂 Load Rota</button>
-    <button id="saveBtn" onclick="save()">💾 Save Rota</button>
-    <button onclick="clearWeek()">Clear All Selections</button>
+<div class="shell">
+
+    <!-- Side navigation: every item calls an existing app function -->
+    <nav class="sidenav" aria-label="Rota actions">
+        <button class="nav-item nav-current" onclick="window.scrollTo({top:0})">
+            <span class="nav-ico">&#128197;</span> Weekly Rota
+        </button>
+        <button class="nav-item" onclick="loadWeek()">
+            <span class="nav-ico">&#128194;</span> Load Week
+        </button>
+        <button class="nav-item" onclick="save()">
+            <span class="nav-ico">&#128190;</span> Save Week
+        </button>
+        <button class="nav-item" onclick="publishViewer()">
+            <span class="nav-ico">&#9729;</span> Publish to Viewer
+        </button>
+        <button class="nav-item" onclick="printFriendlyView()">
+            <span class="nav-ico">&#128424;</span> Print Preview
+        </button>
+        <div class="nav-rule"></div>
+        <button class="nav-item nav-danger" onclick="clearWeek()">
+            <span class="nav-ico">&#10006;</span> Clear All Selections
+        </button>
+    </nav>
+
+    <main class="content">
+
+        <!-- Week picker and primary actions -->
+        <section class="card actionbar">
+            <div class="week-picker">
+                <label for="weekDate">Week Commencing</label>
+                <div class="week-controls">
+                    <input type="date" id="weekDate">
+                    <button class="stepper" onclick="stepWeek(-7)" aria-label="Previous week">&#8249;</button>
+                    <button class="stepper" onclick="stepWeek(7)" aria-label="Next week">&#8250;</button>
+                </div>
+            </div>
+            <div class="actionbar-buttons">
+                <!-- data.js swaps these two buttons' text for the saved/loaded
+                     flash and restores "Save Rota"/"Load Rota", so they stay
+                     single-line with exactly those labels. -->
+                <button id="saveBtn" class="bigbtn bigbtn-blue bigbtn-solo" onclick="save()">Save Rota</button>
+                <button id="loadBtn" class="bigbtn bigbtn-white bigbtn-solo" onclick="loadWeek()">Load Rota</button>
+                <button class="bigbtn bigbtn-green" onclick="publishViewer()">
+                    <span class="bigbtn-title">&#9729; Publish to Viewer</span>
+                    <span class="bigbtn-sub">Update live viewer</span>
+                </button>
+                <button class="bigbtn bigbtn-white" onclick="printFriendlyView()">
+                    <span class="bigbtn-title">&#128424; Print Preview</span>
+                    <span class="bigbtn-sub">Open print view</span>
+                </button>
+            </div>
+        </section>
+
+        <p class="notice">&#9432; Changes are stored when you press <b>Save Rota</b> &mdash; publishing updates the viewer separately.</p>
+
+        <!-- Weekday allocations -->
+        <section class="card">
+            <h2 class="card-title">Weekday Allocations (Mon &ndash; Fri)</h2>
+            <div class="table-scroll">
+                <div id="weekdayRota"></div>
+            </div>
+        </section>
+
+        <!-- Weekend -->
+        <section class="card card-weekend">
+            <h2 class="card-title">Weekend On Call &amp; Waiting List</h2>
+            <div class="table-scroll">
+                <div id="weekendRota"></div>
+            </div>
+        </section>
+
+    </main>
 </div>
 
-<div id="weekdayRota"></div>
-<div class="panel"><div id="weekendRota"></div></div>
+<footer class="statusbar">
+    <span>Cardiothoracic Theatres &middot; Derriford Hospital</span>
+    <span>Cardiac Theatre Rota Manager</span>
+</footer>
 
 <!-- Load order matters: each file depends on globals declared in the
      ones before it (config -> state -> render -> data -> print/viewer -> main). -->
@@ -32,6 +114,18 @@
 <script src="print-preview.js"></script>
 <script src="viewer-publish.js"></script>
 <script src="main.js"></script>
+
+<!-- The one piece of new behaviour on this page: the < > week steppers.
+     Shifts the selected Monday by a week and reloads. Delete this block
+     and the two stepper buttons above to remove the feature entirely. -->
+<script>
+function stepWeek(days) {
+    const d = new Date(weekInput.value);
+    d.setDate(d.getDate() + days);
+    weekInput.value = d.toISOString().split("T")[0];
+    loadWeek();
+}
+</script>
 
 </body>
 </html>

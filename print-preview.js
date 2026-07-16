@@ -4,6 +4,10 @@
  * Opens a separate print-friendly window showing the current week's
  * allocations as static text (dropdowns are replaced with plain values),
  * ready to print and put up in the office.
+ *
+ * The sheet must read perfectly in black and white - the office printer
+ * may not be colour - so structure is carried by weight, rules, and
+ * shading, with colour only as a bonus on colour printers/screens.
  */
 
 // Formats an ISO date as "6th July 2026" for the print preview header.
@@ -51,17 +55,55 @@ function printFriendlyView() {
     const p = window.open("", "_blank");
     const today = new Date().toLocaleString();
 
-    p.document.write(`<!DOCTYPE html><html><head><title>ð¨ Print Preview</title><style>
-body{font-family:Arial,sans-serif;margin:20px}
-.toolbar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:4px}
-button{padding:8px 14px}
-.header{display:flex;align-items:center;gap:16px;margin-bottom:4px}.header-text{flex:1;text-align:center}.logo{height:60px}
-table{width:100%;border-collapse:collapse}th,td{border:1px solid #000;padding:3px}
-@media print{.toolbar{display:none}@page{size:A4 landscape;margin:8mm}}
+    p.document.write(`<!DOCTYPE html><html><head><title>Print Preview</title><style>
+body{font-family:Arial,Helvetica,sans-serif;margin:24px;color:#111}
+
+/* On-screen toolbar - never printed */
+.toolbar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:10px}
+.toolbar button{font:inherit;font-size:14px;font-weight:700;padding:9px 16px;
+  border-radius:6px;border:1px solid #98A2AB;background:#fff;cursor:pointer}
+.toolbar button:first-child{background:#005EB8;border-color:#005EB8;color:#fff}
+
+/* Header band */
+.header{display:flex;align-items:center;gap:18px;border-bottom:3px solid #111;
+  padding-bottom:10px;margin-bottom:12px}
+.logo{height:64px}
+.header-text{flex:1;text-align:center}
+.header-text h1{margin:0;font-size:22px;letter-spacing:.02em}
+.header-sub{margin:2px 0 0;font-size:13px;color:#444}
+.header-week{margin:6px 0 0;font-size:16px;font-weight:700}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin-bottom:14px}
+th{background:#111;color:#fff;font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;text-align:left;padding:7px 6px;border:1px solid #111}
+td{border:1px solid #666;padding:5px 6px;vertical-align:top}
+tr:nth-child(even) td{background:#F1F1F1}
+
+/* Day cells anchor each row */
+.daycell{font-weight:800;font-size:13px;background:#E2E2E2 !important;
+  border-right:2px solid #111;width:9%}
+
+/* Values that replace the dropdowns */
+td div{font-weight:700;font-size:13px;text-align:center;padding:1px 0;min-height:15px}
+
+/* On Call column: heaviest ink on the page - it's what people look for */
+table:first-of-type td:last-child{border-left:2px solid #111}
+table:first-of-type th:last-child{border-left:2px solid #fff}
+
+.printed{margin-top:10px;text-align:right;font-size:11px;color:#555}
+
+@media print{
+  .toolbar{display:none}
+  @page{size:A4 landscape;margin:8mm}
+  body{margin:0}
+  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  td,th{page-break-inside:avoid}
+}
 </style></head><body>
-<div class='toolbar'><button onclick='window.print()'>ð¨ Print</button><button onclick='window.close()'>â Close Preview</button></div>
-<div class="header"><img class="logo" src="${logoUrl}"><div class="header-text"><h1>Cardiothoracic Theatre SODP Allocations</h1><div>Cardiothoracic Theatres</div><div>Derriford Hospital</div><div><b>Week Commencing:</b> ${formatWeekCommencing(weekInput.value)}</div></div></div>
-<div id='content'></div><div style='text-align:right;margin-top:12px'>Printed: ${today}</div></body></html>`);
+<div class='toolbar'><button onclick='window.print()'>&#128424; Print</button><button onclick='window.close()'>&#10006; Close Preview</button></div>
+<div class="header"><img class="logo" src="${logoUrl}"><div class="header-text"><h1>Cardiothoracic Theatre SODP Allocations</h1><p class="header-sub">Cardiothoracic Theatres &middot; Derriford Hospital</p><p class="header-week">Week Commencing: ${formatWeekCommencing(weekInput.value)}</p></div></div>
+<div id='content'></div><div class='printed'>Printed: ${today}</div></body></html>`);
 
     p.document.getElementById('content').innerHTML = document.getElementById('weekdayRota').innerHTML + "<h2 style='text-align:center'></h2>" + document.getElementById('weekendRota').innerHTML;
 
@@ -71,7 +113,7 @@ table{width:100%;border-collapse:collapse}th,td{border:1px solid #000;padding:3p
         const d = p.document.createElement('div');
         d.textContent = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : '';
         d.style.fontWeight = 'bold';
-        d.style.fontSize = '15px';
+        d.style.fontSize = '13px';   // sized so a full week fits one A4 landscape sheet
         d.style.textAlign = 'center';
         sel.replaceWith(d);
     });

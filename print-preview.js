@@ -64,38 +64,38 @@ body{font-family:Arial,Helvetica,sans-serif;margin:24px;color:#111}
   border-radius:6px;border:1px solid #98A2AB;background:#fff;cursor:pointer}
 .toolbar button:first-child{background:#005EB8;border-color:#005EB8;color:#fff}
 
-/* Header band */
-.header{display:flex;align-items:center;gap:18px;border-bottom:3px solid #111;
-  padding-bottom:10px;margin-bottom:12px}
-.logo{height:64px}
+/* Header band - compact so the tables get the page */
+.header{display:flex;align-items:center;gap:14px;border-bottom:2px solid #111;
+  padding-bottom:6px;margin-bottom:8px}
+.logo{height:44px}
 .header-text{flex:1;text-align:center}
-.header-text h1{margin:0;font-size:22px;letter-spacing:.02em}
-.header-sub{margin:2px 0 0;font-size:13px;color:#444}
-.header-week{margin:6px 0 0;font-size:16px;font-weight:700}
+.header-text h1{margin:0;font-size:17px;letter-spacing:.02em}
+.header-sub{margin:1px 0 0;font-size:11px;color:#444}
+.header-week{margin:3px 0 0;font-size:13px;font-weight:700}
 
-/* Tables */
-table{width:100%;border-collapse:collapse;margin-bottom:14px}
-th{background:#111;color:#fff;font-size:11px;letter-spacing:.06em;
-  text-transform:uppercase;text-align:left;padding:7px 6px;border:1px solid #111}
-td{border:1px solid #666;padding:5px 6px;vertical-align:top}
+/* Tables - sized so weekday + weekend fit one A4 landscape sheet */
+table{width:100%;border-collapse:collapse;margin-bottom:8px}
+th{background:#111;color:#fff;font-size:9px;letter-spacing:.05em;
+  text-transform:uppercase;text-align:left;padding:4px 5px;border:1px solid #111}
+td{border:1px solid #666;padding:2px 4px;vertical-align:top}
 tr:nth-child(even) td{background:#F1F1F1}
 
 /* Day cells anchor each row */
-.daycell{font-weight:800;font-size:13px;background:#E2E2E2 !important;
-  border-right:2px solid #111;width:9%}
+.daycell{font-weight:800;font-size:10px;background:#E2E2E2 !important;
+  border-right:2px solid #111;width:8%}
 
 /* Values that replace the dropdowns */
-td div{font-weight:700;font-size:13px;text-align:center;padding:1px 0;min-height:15px}
+td div{font-weight:700;font-size:10px;text-align:center;padding:0;min-height:12px;line-height:1.25}
 
 /* On Call column: heaviest ink on the page - it's what people look for */
 table:first-of-type td:last-child{border-left:2px solid #111}
 table:first-of-type th:last-child{border-left:2px solid #fff}
 
-.printed{margin-top:10px;text-align:right;font-size:11px;color:#555}
+.printed{margin-top:4px;text-align:right;font-size:9px;color:#555}
 
 @media print{
   .toolbar{display:none}
-  @page{size:A4 landscape;margin:8mm}
+  @page{size:A4 landscape;margin:6mm}
   body{margin:0}
   th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   td,th{page-break-inside:avoid}
@@ -113,7 +113,7 @@ table:first-of-type th:last-child{border-left:2px solid #fff}
         const d = p.document.createElement('div');
         d.textContent = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : '';
         d.style.fontWeight = 'bold';
-        d.style.fontSize = '13px';   // sized so a full week fits one A4 landscape sheet
+        d.style.fontSize = '10px';   // sized so a full week fits one A4 landscape sheet
         d.style.textAlign = 'center';
         sel.replaceWith(d);
     });
@@ -128,7 +128,7 @@ table:first-of-type th:last-child{border-left:2px solid #fff}
             const span = p.document.createElement("div");
             span.textContent = "FROM HOME";
             span.style.fontWeight = "bold";
-            span.style.fontSize = "12px";
+            span.style.fontSize = "9px";
             span.style.textAlign = "center";
             cb.parentElement.replaceWith(span);
         } else {

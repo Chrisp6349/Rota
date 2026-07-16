@@ -43,10 +43,15 @@ function printFriendlyView() {
     document.querySelectorAll('input[type="checkbox"][data-key]')
         .forEach(c => rota[c.dataset.key] = c.checked);
 
+    // The preview opens as a blank window, so a relative path like
+    // "logo.jpg" has nothing to resolve against and the image would break.
+    // Resolve it to a full address against this page before injecting it.
+    const logoUrl = new URL(LOGO_PATH, window.location.href).href;
+
     const p = window.open("", "_blank");
     const today = new Date().toLocaleString();
 
-    p.document.write(`<!DOCTYPE html><html><head><title>🖨 Print Preview</title><style>
+    p.document.write(`<!DOCTYPE html><html><head><title>ð¨ Print Preview</title><style>
 body{font-family:Arial,sans-serif;margin:20px}
 .toolbar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:4px}
 button{padding:8px 14px}
@@ -54,8 +59,8 @@ button{padding:8px 14px}
 table{width:100%;border-collapse:collapse}th,td{border:1px solid #000;padding:3px}
 @media print{.toolbar{display:none}@page{size:A4 landscape;margin:8mm}}
 </style></head><body>
-<div class='toolbar'><button onclick='window.print()'>🖨 Print</button><button onclick='window.close()'>✖ Close Preview</button></div>
-<div class="header"><img class="logo" src="assets/logo.jpg"><div class="header-text"><h1>Cardiothoracic Theatre SODP Allocations</h1><div>Cardiothoracic Theatres</div><div>Derriford Hospital</div><div><b>Week Commencing:</b> ${formatWeekCommencing(weekInput.value)}</div></div></div>
+<div class='toolbar'><button onclick='window.print()'>ð¨ Print</button><button onclick='window.close()'>â Close Preview</button></div>
+<div class="header"><img class="logo" src="${logoUrl}"><div class="header-text"><h1>Cardiothoracic Theatre SODP Allocations</h1><div>Cardiothoracic Theatres</div><div>Derriford Hospital</div><div><b>Week Commencing:</b> ${formatWeekCommencing(weekInput.value)}</div></div></div>
 <div id='content'></div><div style='text-align:right;margin-top:12px'>Printed: ${today}</div></body></html>`);
 
     p.document.getElementById('content').innerHTML = document.getElementById('weekdayRota').innerHTML + "<h2 style='text-align:center'></h2>" + document.getElementById('weekendRota').innerHTML;

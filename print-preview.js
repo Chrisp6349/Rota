@@ -56,6 +56,7 @@ function printFriendlyView() {
     const today = new Date().toLocaleString();
 
     p.document.write(`<!DOCTYPE html><html><head><title>Print Preview</title><style>
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:Arial,Helvetica,sans-serif;margin:24px;color:#111}
 
 /* On-screen toolbar - never printed */
@@ -85,12 +86,13 @@ tr:nth-child(even) td{background:#F1F1F1}
   border-right:2px solid #111;width:8%}
 
 /* Values that replace the dropdowns */
-td div{font-weight:700;font-size:10px;text-align:center;padding:0;min-height:12px;line-height:1.25}
+td div{font-weight:700;font-size:10px;text-align:center;padding:0;min-height:11px;line-height:1.2}
 
 /* On Call column: heaviest ink on the page - it's what people look for */
 table:first-of-type td:last-child{border-left:2px solid #111}
 table:first-of-type th:last-child{border-left:2px solid #fff}
 
+h2{margin:2px 0}
 .printed{margin-top:4px;text-align:right;font-size:9px;color:#555}
 
 @media print{

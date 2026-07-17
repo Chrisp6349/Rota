@@ -79,7 +79,7 @@ table{width:100%;border-collapse:collapse;margin-bottom:10px}
 th{background:#fff;color:#111;font-size:12px;letter-spacing:.06em;
   text-transform:uppercase;text-align:center;padding:6px 5px;
   border:1px solid #666;border-bottom:3px double #111}
-td{border:1px solid #666;padding:3px 5px;vertical-align:top}
+td{border:1px solid #666;padding:3px 5px;vertical-align:middle}
 tr:nth-child(even) td{background:#F1F1F1}
 
 /* Day cells anchor each row */
@@ -96,6 +96,11 @@ td div:empty{display:none}
 table:first-of-type td:last-child{border-left:2px solid #111}
 table:first-of-type th:last-child{border-left:2px solid #111}
 
+/* Stretch rows to share out spare page height - boxes grow, text stays
+   at a size that's verified to fit one sheet even on busy weeks */
+table:first-of-type td{height:74px}
+.weekend-table td{height:54px}
+
 h2{margin:2px 0}
 .printed{margin-top:6px;text-align:right;font-size:10px;color:#555}
 
@@ -105,6 +110,8 @@ h2{margin:2px 0}
   body{margin:0}
   th,td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   td,th{page-break-inside:avoid}
+  table:first-of-type td{height:18mm}
+  .weekend-table td{height:13mm}
 }
 </style></head><body>
 <div class='toolbar'><button onclick='window.print()'>&#128424; Print</button><button onclick='window.close()'>&#10006; Close Preview</button></div>

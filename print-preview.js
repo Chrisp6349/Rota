@@ -76,21 +76,24 @@ body{font-family:Arial,Helvetica,sans-serif;margin:24px;color:#111}
 
 /* Tables - sized so weekday + weekend fit one A4 landscape sheet */
 table{width:100%;border-collapse:collapse;margin-bottom:8px}
-th{background:#111;color:#fff;font-size:9px;letter-spacing:.05em;
-  text-transform:uppercase;text-align:left;padding:4px 5px;border:1px solid #111}
+th{background:#fff;color:#111;font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;text-align:center;padding:4px 5px;
+  border:1px solid #666;border-bottom:3px double #111}
 td{border:1px solid #666;padding:2px 4px;vertical-align:top}
 tr:nth-child(even) td{background:#F1F1F1}
 
 /* Day cells anchor each row */
-.daycell{font-weight:800;font-size:10px;background:#E2E2E2 !important;
+.daycell{font-weight:800;font-size:11px;text-align:center;background:#E2E2E2 !important;
   border-right:2px solid #111;width:8%}
 
-/* Values that replace the dropdowns */
-td div{font-weight:700;font-size:10px;text-align:center;padding:0;min-height:11px;line-height:1.2}
+/* Values that replace the dropdowns - empty slots collapse so the
+   filled ones can be bigger without taller boxes */
+td div{font-weight:700;font-size:12px;text-align:center;padding:0;line-height:1.2}
+td div:empty{display:none}
 
 /* On Call column: heaviest ink on the page - it's what people look for */
 table:first-of-type td:last-child{border-left:2px solid #111}
-table:first-of-type th:last-child{border-left:2px solid #fff}
+table:first-of-type th:last-child{border-left:2px solid #111}
 
 h2{margin:2px 0}
 .printed{margin-top:4px;text-align:right;font-size:9px;color:#555}
@@ -99,7 +102,7 @@ h2{margin:2px 0}
   .toolbar{display:none}
   @page{size:A4 landscape;margin:6mm}
   body{margin:0}
-  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th,td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   td,th{page-break-inside:avoid}
 }
 </style></head><body>
@@ -115,7 +118,7 @@ h2{margin:2px 0}
         const d = p.document.createElement('div');
         d.textContent = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : '';
         d.style.fontWeight = 'bold';
-        d.style.fontSize = '10px';   // sized so a full week fits one A4 landscape sheet
+        d.style.fontSize = '12px';   // sized so a full week fits one A4 landscape sheet
         d.style.textAlign = 'center';
         sel.replaceWith(d);
     });
@@ -130,7 +133,7 @@ h2{margin:2px 0}
             const span = p.document.createElement("div");
             span.textContent = "FROM HOME";
             span.style.fontWeight = "bold";
-            span.style.fontSize = "9px";
+            span.style.fontSize = "10px";
             span.style.textAlign = "center";
             cb.parentElement.replaceWith(span);
         } else {

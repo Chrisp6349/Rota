@@ -65,10 +65,10 @@ body{font-family:Arial,Helvetica,sans-serif;margin:24px;color:#111}
   border-radius:6px;border:1px solid #98A2AB;background:#fff;cursor:pointer}
 .toolbar button:first-child{background:#005EB8;border-color:#005EB8;color:#fff}
 
-/* Header band - compact so the tables get the page */
+/* Header band - a logo either side of the centred title */
 .header{display:flex;align-items:center;gap:14px;border-bottom:2px solid #111;
   padding-bottom:6px;margin-bottom:8px}
-.logo{height:50px}
+.logo{height:68px}
 .header-text{flex:1;text-align:center}
 .header-text h1{margin:0;font-size:19px;letter-spacing:.02em}
 .header-sub{margin:2px 0 0;font-size:13px;color:#444}
@@ -115,7 +115,7 @@ h2{margin:2px 0}
 }
 </style></head><body>
 <div class='toolbar'><button onclick='window.print()'>&#128424; Print</button><button onclick='window.close()'>&#10006; Close Preview</button></div>
-<div class="header"><img class="logo" src="${logoUrl}"><div class="header-text"><h1>Cardiothoracic Theatre SODP Allocations</h1><p class="header-sub">Cardiothoracic Theatres &middot; Derriford Hospital</p><p class="header-week">Week Commencing: ${formatWeekCommencing(weekInput.value)}</p></div></div>
+<div class="header"><img class="logo" src="${logoUrl}"><div class="header-text"><h1>Cardiothoracic Theatre SODP Allocations</h1><p class="header-sub">Cardiothoracic Theatres &middot; Derriford Hospital</p><p class="header-week">Week Commencing: ${formatWeekCommencing(weekInput.value)}</p></div><img class="logo" src="${logoUrl}"></div>
 <div id='content'></div><div class='printed'>Printed: ${today}</div></body></html>`);
 
     p.document.getElementById('content').innerHTML = document.getElementById('weekdayRota').innerHTML + "<h2 style='text-align:center'></h2>" + document.getElementById('weekendRota').innerHTML;

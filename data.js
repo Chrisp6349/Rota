@@ -71,14 +71,17 @@ function saveCheckbox(cb) {
     save();
 }
 
-// Clears every allocation for the selected week, after confirmation.
+// Clears every allocation for the selected week. Requires typing CLEAR,
+// so it cannot be triggered by an accidental click-through.
 async function clearWeek() {
-    if (confirm("Clear all allocations for this week?")) {
+    const answer = prompt("⚠️ This will erase ALL allocations for the week commencing " + weekInput.value + " and cannot be undone.\n\nType CLEAR to confirm:");
+    if (answer && answer.trim().toUpperCase() === "CLEAR") {
         rota = {};
         render();
         await save();
     }
 }
+
 
 // Updates in-memory rota state when a dropdown changes and re-renders,
 // so the "already used today" greying-out in makeSelect() stays current.

@@ -25,7 +25,7 @@ const anaes = [
 const listOptions = [
     "", "ENT", "NO LIST", "NO SODP", "AM LIST", "PM LIST",
     "BANK HOLIDAY", "THEATRE MAINTENANCE", "CARDIAC", "THORACIC",
-    "TAVI", "CME MORNING", "AWAY DAY", "EPIC TRAINING", "THORACIC CT3"
+    "TAVI", "CME MORNING", "AWAY DAY", "EPIC TRAINING", "THORACIC CT3", "NO ANAESTHETIST"
 ];
 
 // Options for the weekday on-call "extra" dropdown

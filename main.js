@@ -7,3 +7,5 @@
  */
 
 loadWeek();
+document.getElementById("appVersion").textContent =
+    ` v${window.APP_VERSION}`;
